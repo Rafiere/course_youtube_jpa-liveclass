@@ -1,6 +1,6 @@
-package org.example;
+package org.example.aula01;
 
-import org.example.model.Cliente;
+import org.example.aula01.model.Cliente;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -43,9 +43,41 @@ public class ExemploExecucao {
         //Deletando:
 
         //Nós só conseguimos remover objetos em que o Entity Manager está ciente da sua existência.
+
+        //O EntityManager gerencia as entidades para fazer uma espécie de "cache". Se buscarmos dois objetos com o mesmo ID, na primeira
+        //busca, ele irá no banco de dados. Na segunda, ele irá no cache, pois ele já está armazenado na memória. Isso é chamado de
+        //cache de primeiro nível.
         Cliente cliente3 = entityManager.find(Cliente.class, 1);
         entityManager.getTransaction().begin();
         entityManager.remove(cliente3);
+        entityManager.getTransaction().commit();
+
+        //Apenas a busca pelo "cliente4" será feita, pois ele já estará na memória
+        //quando a segunda busca for realizada.
+        Cliente cliente4 = entityManager.find(Cliente.class, 4);
+        Cliente cliente5 = entityManager.find(Cliente.class, 4);
+
+        //Atualização - Será feita automaticamente pois o objeto já está sendo gerenciado pelo Hibernate.:
+        Cliente cliente6 = entityManager.find(Cliente.class, 5);
+        entityManager.getTransaction().begin();
+        cliente6.setNome("Teste 2");
+        entityManager.getTransaction().commit();
+
+        //Outra forma de atualizar objetos:
+
+        Cliente cliente7 = new Cliente();
+        cliente7.setId(1);
+        cliente7.setNome("Teste 3");
+
+        entityManager.getTransaction().begin();
+        entityManager.merge(cliente7);
+        entityManager.getTransaction().commit();
+
+        //Criando objetos com o merge
+        Cliente cliente8 = new Cliente();
+        cliente8.setNome("Teste 4");
+        entityManager.getTransaction().begin();
+        entityManager.merge(cliente8);
         entityManager.getTransaction().commit();
 
         /* Estamos fechando a conexão. */

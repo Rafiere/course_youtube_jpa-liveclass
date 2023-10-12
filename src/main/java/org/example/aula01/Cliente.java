@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.aula01.model;
 
 import javax.persistence.*;
 import java.util.Objects;
