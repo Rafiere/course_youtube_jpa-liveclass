@@ -122,10 +122,9 @@ public class ConsultasComJPQL {
 
         String jpql = "SELECT u FROM Usuario u WHERE u.id = :idUsuario";
 
-        TypedQuery<Usuario> typedQuery = entityManager.createQuery(jpql, Usuario.class);
-
         //Estamos passando o valor "1" para o parâmetro "idUsuario".
-        typedQuery.setParameter("idUsuario", 1);
+        //Como é uma interface fluente, podemos juntar os comandos "setParameter()".
+        TypedQuery<Usuario> typedQuery = entityManager.createQuery(jpql, Usuario.class).setParameter("idUsuario", 1);
 
         //Estamos executando a query.
         Usuario usuario = typedQuery.getSingleResult();
