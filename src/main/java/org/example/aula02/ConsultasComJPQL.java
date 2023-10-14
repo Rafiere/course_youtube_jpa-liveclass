@@ -111,7 +111,10 @@ public class ConsultasComJPQL {
 
         List<UsuarioDTO> listaDeUsuarios = typedQuery.getResultList();
 
-        listaDeUsuarios.forEach(u -> System.out.println("ID: " + u.getId() + ", Login: " + u.getLogin() + ", Nome: " + u.getNome()));
+        listaDeUsuarios.forEach(u -> System.out.println(
+                "ID: " + u.getId() +
+                ", Login: " + u.getLogin() +
+                ", Nome: " + u.getNome()));
     }
 
     private static void passandoParametros(EntityManager entityManager) {
@@ -124,7 +127,8 @@ public class ConsultasComJPQL {
 
         //Estamos passando o valor "1" para o parâmetro "idUsuario".
         //Como é uma interface fluente, podemos juntar os comandos "setParameter()".
-        TypedQuery<Usuario> typedQuery = entityManager.createQuery(jpql, Usuario.class).setParameter("idUsuario", 1);
+        TypedQuery<Usuario> typedQuery =
+                entityManager.createQuery(jpql, Usuario.class).setParameter("idUsuario", 1);
 
         //Estamos executando a query.
         Usuario usuario = typedQuery.getSingleResult();
